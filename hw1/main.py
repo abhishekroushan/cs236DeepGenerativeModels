@@ -126,13 +126,18 @@ def main():
         #################################
         # compute label = f(ll)
         # lbls.append(label)
+        #print("Snippet:")
+        #print(snippet)
         label=0
+        #label categorization: depending on the histogram limits for each class, adjust label assignment
         if (ll>-800 and ll<-650):
             label=0
         if (ll>-450 and ll<-210):
             label=1
-        if (ll>-260 and ll<-100):
+        if (ll>-230 and ll<-100):
             label=2
+        #print("label=")
+        #print(label)
         lbls.append(label)
 
 

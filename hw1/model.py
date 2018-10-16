@@ -67,14 +67,16 @@ class RNN(nn.Module):
             ##### Complete the code here #####
             # Append each generated token to texts
             # hint: you can use self.forward
+            #appending first idx
             texts.append(int(x))
             char_pred_idx=x
             h=h_prev
+            #for each ch in seq, compute logits, softmax, and use that as probability to sample for the next ch
             for i in range(1,seq_len):
                 logits,h=self.forward(char_pred_idx, h)
                 probs=F.softmax(logits, dim=1)#axis
                 #probs_ary=probs.reshape(-1)
-                #Rounding error to proobabilities sum (float), therefore normalizing
+                #Rounding error to proobabilities sum (float), therefore normalizing prob to 1
                 probs_ary=probs.numpy()
                 probs_ary /=probs_ary.sum(axis=1)
                 probs_ary=probs_ary.reshape(-1)
@@ -106,6 +108,7 @@ class RNN(nn.Module):
             # hint: you can use self.forward
             #ll = torch.FloatTensor([ll])
             h=h_prev
+            #For each character idx in string, get the logits from RNN, apply softmax, reshape output vector and update x to give that character next time
             for i in string:
                 logits,h=self.forward(x,h)
                 probs=F.softmax(logits, dim=1)
